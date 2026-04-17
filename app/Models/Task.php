@@ -15,4 +15,4 @@ class Task extends Model
         'description', 
         'completed', 
     ]; 
-}
+} 

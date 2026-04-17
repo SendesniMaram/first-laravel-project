@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Task; 
 use Illuminate\Http\Request; 
-
+ 
 class TaskController extends Controller 
 { 
     // SELECT * FROM tasks ORDER BY created_at DESC 
@@ -59,3 +58,4 @@ class TaskController extends Controller
                          ->with('success', 'Tâche supprimée !'); 
     } 
 } 
+?>

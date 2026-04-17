@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
 
-/*
+
 Route::get('/', [PageController::class, 'home']);
 Route::get('/home', [PageController::class, 'home']);
 Route::get('/about', [PageController::class, 'about']);
@@ -68,6 +68,6 @@ Route::get('/equipe/{membre?}', function ($membre = null) {
 
     return "Ce membre n'existe pas";
 });
-*/
+
 Route::get('/', fn() => redirect()->route('tasks.index'));
 Route::resource('tasks', TaskController::class);

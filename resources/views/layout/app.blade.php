@@ -64,27 +64,18 @@
     @yield('styles') 
 </head> 
 <body> 
- 
-    {{-- Navigation --}} 
-    <nav> 
-        <ul> 
-            <li><a href="/">Accueil</a></li> 
-            <li><a href="/about">À propos</a></li> 
-            <li><a href="/services">Services</a></li> 
-            <li><a href="/contact">Contact</a></li> 
-        </ul> 
-    </nav> 
- 
-    {{-- Contenu principal --}} 
-    <div class="container"> 
-        @yield('content') 
-    </div> 
- 
-    {{-- Footer --}} 
-    <footer> 
-        <p>&copy; {{ date('Y') }} Mon Site Laravel. Tous droits réservés.</p> 
-    </footer> 
- 
-    @yield('scripts') 
-</body> 
-</html> 
+ <!DOCTYPE html> 
+<html lang="fr"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>@yield('title', 'Todo App')</title> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/..."> 
+</head> 
+<body class="bg-light"> 
+<div class="container py-4"> 
+    @if(session('success')) 
+        <div class="alert alert-success">{{ session('success') }}</div> 
+    @endif 
+    @yield('content') 
+</div> 
+</body></html> 
