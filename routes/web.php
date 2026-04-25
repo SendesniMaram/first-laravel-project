@@ -13,10 +13,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('tasks.index');
 });
-
+Route::view('/contact', 'contact')->name('contact');
+Route::view('/about', 'about')->name('about');
+Route::view('/profil', 'profil')->name('profil');
 /* Dashboard */
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $tasks = auth()->user()->tasks;
+
+    $completed = $tasks->where('completed', true)->count();
+
+    return view('dashboard', compact('tasks', 'completed'));
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 /* Routes protégées */

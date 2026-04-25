@@ -1,54 +1,44 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Profil</title>
+<x-app-layout>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #f5f5f5;
-}
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            👤 Mon Profil
+        </h2>
+    </x-slot>
 
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-}
+    <div class="py-12">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-h1 {
-    color: #FF2D20;
-    margin-top: 0;
-}
-</style>
+            <!-- INFO USER -->
+            <div class="p-6 bg-white shadow rounded-lg">
+                <h3 class="text-lg font-semibold mb-4">Informations du compte</h3>
 
-</head>
-<body>
+                <p><strong>Nom :</strong> {{ auth()->user()->name }}</p>
+                <p><strong>Email :</strong> {{ auth()->user()->email }}</p>
+            </div>
 
-<?php
-$nom = "Marouma";
-$age = 24;
-$ville = "Tunis";
-?>
+            <!-- UPDATE PROFILE -->
+            <div class="p-6 bg-white shadow rounded-lg">
+                <h3 class="text-lg font-semibold mb-4">Modifier les informations</h3>
 
-<div class="card">
+                @include('profile.partials.update-profile-information-form')
+            </div>
 
-<h1>Profil de <?php echo $nom; ?></h1>
+            <!-- UPDATE PASSWORD -->
+            <div class="p-6 bg-white shadow rounded-lg">
+                <h3 class="text-lg font-semibold mb-4">Changer le mot de passe</h3>
 
-<p><strong>Âge :</strong> <?php echo $age; ?> ans</p>
-<p><strong>Ville :</strong> <?php echo $ville; ?></p>
+                @include('profile.partials.update-password-form')
+            </div>
 
-<?php if ($age >= 18) { ?>
-<p style="color:green;">Vous êtes majeur</p>
-<?php } else { ?>
-<p style="color:orange;">Vous êtes mineur</p>
-<?php } ?>
+            <!-- DELETE ACCOUNT -->
+            <div class="p-6 bg-red-50 border border-red-200 rounded-lg">
+                <h3 class="text-lg font-semibold mb-4 text-red-600">Supprimer le compte</h3>
 
-</div>
+                @include('profile.partials.delete-user-form')
+            </div>
 
-</body>
-</html>
+        </div>
+    </div>
+
+</x-app-layout>

@@ -12,7 +12,7 @@
             <h5 class="{{ $task->completed ? 'text-decoration-line-through' : '' }}">
                 {{ $task->title }}
             </h5>
-
+<p>Priorité : {{ $task->priority }}</p>
             <p>{{ $task->description }}</p>
 
             <a href="{{ route('tasks.edit', $task) }}">Modifier</a>

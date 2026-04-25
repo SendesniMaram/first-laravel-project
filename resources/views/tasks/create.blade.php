@@ -20,6 +20,14 @@
         <textarea name="description" class="form-control">{{ old('description') 
 }}</textarea> 
       </div> 
+      <div>
+    <label>Priorité</label>
+    <select name="priority">
+        <option value="haute">Haute</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="basse">Basse</option>
+    </select>
+</div>
       <button type="submit" class="btn btn-success">enregistrer</button> 
       <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Annuler</a> 
     </form> 

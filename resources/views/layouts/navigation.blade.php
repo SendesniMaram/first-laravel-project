@@ -8,6 +8,7 @@
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
+
                 </div>
 
                 <!-- Navigation Links -->
@@ -15,6 +16,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('tasks.index')">Tâches</x-nav-link>
+<x-nav-link :href="route('contact')">Contact</x-nav-link>
+<x-nav-link :href="route('about')">About Us</x-nav-link>
                 </div>
             </div>
 
@@ -34,7 +38,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profil')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 

@@ -28,7 +28,33 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(route('dashboard'));
+    }
+
+    public function test_users_are_redirected_to_dashboard_after_login_regardless_of_previous_page(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->from('/tasks')->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard'));
+    }
+
+    public function test_users_are_redirected_to_dashboard_after_login_from_home_page(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->from('/')->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard'));
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void

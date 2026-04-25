@@ -154,8 +154,12 @@
 
         {{-- CONTENU PRINCIPAL --}}
         <main class="max-w-7xl mx-auto px-4 py-6">
-            @yield('content') {{-- ✅ CORRECTION ICI --}}
-        </main>
+    @isset($slot)
+        {{ $slot }}
+    @else
+        @yield('content')
+    @endisset
+</main>
 
     </div>
 
