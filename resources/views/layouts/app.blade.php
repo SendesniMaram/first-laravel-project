@@ -1,156 +1,163 @@
-@extends('layouts.app')
-@section('title', 'Mes Tâches')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('content')
+    <title>@yield('title', config('app.name', 'Laravel'))</title>
 
-<style>
-body {
-    background-color: #f4f6f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-h1 {
-    text-align: center;
-    margin-top: 30px;
-    font-weight: 600;
-}
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body {
+            font-family: 'Figtree', sans-serif;
+            background: #f8fafc;
+            margin: 0;
+        }
 
-h1 span {
-    background-color: #28a745;
-    color: white;
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 0.8em;
-}
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
 
-a[href*="tasks.create"] {
-    display: block;
-    width: fit-content;
-    margin: 20px auto;
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: 0.3s;
-}
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-a[href*="tasks.create"]:hover {
-    background-color: #218838;
-}
+        h1 span {
+            background: #4f46e5;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
 
-.card {
-    max-width: 600px;
-    margin: 10px auto;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    transition: 0.3s;
-    background: white;
-}
+        /* Bouton */
+        a {
+            text-decoration: none;
+        }
 
-.card:hover {
-    transform: scale(1.02);
-}
+        a[href*="create"] {
+            background: #4f46e5;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
 
-.card-body {
-    padding: 15px;
-}
+        a[href*="create"]:hover {
+            background: #4338ca;
+        }
 
-.border-success {
-    border-left: 5px solid #28a745 !important;
-}
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e5e7eb;
+            transition: 0.2s;
+        }
 
-.text-decoration-line-through {
-    text-decoration: line-through;
-    color: #6c757d;
-}
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
 
-p {
-    margin: 10px 0;
-    color: #555;
-}
+        .border-success {
+            border-left: 5px solid #22c55e;
+        }
 
-.actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 10px;
-}
+        .text-decoration-line-through {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
 
-.actions a {
-    background-color: #0d6efd;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 6px;
-    text-decoration: none;
-}
+        .card h5 {
+            margin: 0;
+            font-weight: 600;
+        }
 
-.actions a:hover {
-    background-color: #0b5ed7;
-}
+        .card p {
+            color: #6b7280;
+        }
 
-button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        /* Actions */
+        .actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
 
-button:hover {
-    background-color: #c82333;
-}
+        a[href*="edit"] {
+            background: #f59e0b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
 
-form {
-    display: inline;
-}
+        a[href*="edit"]:hover {
+            background: #d97706;
+        }
 
-.empty-message {
-    text-align: center;
-    margin-top: 20px;
-}
+        button {
+            background: #ef4444;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-.empty-message a {
-    color: #28a745;
-    text-decoration: none;
-    font-weight: 500;
-}
+        button:hover {
+            background: #dc2626;
+        }
 
-.empty-message a:hover {
-    text-decoration: underline;
-}
-</style>
+        /* Message */
+        .alert {
+            background: #dcfce7;
+            color: #166534;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
 
-<h1>Mes Tâches <span>{{ $tasks->count() }}</span></h1>
-<a href="{{ route('tasks.create') }}">+ Nouvelle Tâche</a>
+<body class="font-sans antialiased bg-gray-100">
 
-@forelse($tasks as $task)
-    <div class="card mb-2 {{ $task->completed ? 'border-success' : '' }}">
-        <div class="card-body">
-            <h5 class="{{ $task->completed ? 'text-decoration-line-through' : '' }}">
-                {{ $task->title }}
-            </h5>
+    <div class="min-h-screen">
 
-            <p>{{ $task->description }}</p>
+        {{-- Navigation (optionnel, tu peux garder ou supprimer) --}}
+        @include('layouts.navigation')
 
-            <div class="actions">
-                <a href="{{ route('tasks.edit', $task) }}">✏️ Modifier</a>
-
-                <form action="{{ route('tasks.destroy', $task) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Supprimer ?')">🗑 Supprimer</button>
-                </form>
-            </div>
+        {{-- Message succès --}}
+        <div class="max-w-7xl mx-auto py-4 px-4">
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
+
+        {{-- CONTENU PRINCIPAL --}}
+        <main class="max-w-7xl mx-auto px-4 py-6">
+            @yield('content') {{-- ✅ CORRECTION ICI --}}
+        </main>
+
     </div>
-@empty
-    <p class="empty-message">
-        Aucune tâche.
-        <a href="{{ route('tasks.create') }}">Créer votre première tâche</a>
-    </p>
-@endforelse
-*
-@endsection
+
+</body>
+</html>
