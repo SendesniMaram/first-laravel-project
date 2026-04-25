@@ -4,15 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
-class Task extends Model 
-{ 
-    use HasFactory; 
- 
-    // Champs autorisés à être remplis via formulaire 
-    protected $fillable = [ 
-        'title', 
-        'description', 
-        'completed', 
-    ]; 
-} 
+class Task extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'completed',
+        'user_id',
+        'priority',
+    ];
+
+    // ✔ relation correcte
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
